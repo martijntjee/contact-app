@@ -108,7 +108,7 @@ function renderContacts() {
         return;
     }
 
-    contacts.forEach(contact => {
+    contacts.forEach((contact, index) => {
         const contactCard = document.createElement('div');
         contactCard.className = 'contact-card';
         contactCard.innerHTML = `
@@ -120,9 +120,25 @@ function renderContacts() {
             ${contact.customFields.map(field => `
                 <p>${field.key}: ${field.value}</p>
             `).join('')}
+            <button class="btn btn-danger delete-contact" data-index="${index}">Verwijderen</button>
         `;
         contactList.appendChild(contactCard);
     });
+
+    // Voeg eventlisteners toe aan de verwijderknoppen
+    document.querySelectorAll('.delete-contact').forEach(button => {
+        button.addEventListener('click', function() {
+            const index = this.getAttribute('data-index');
+            deleteContact(index);
+        });
+    });
+}
+
+function deleteContact(index) {
+    let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contacts.splice(index, 1); // Verwijder het contact op de gegeven index
+    localStorage.setItem('contacts', JSON.stringify(contacts)); // Sla de bijgewerkte lijst op
+    renderContacts(); // Render de bijgewerkte lijst
 }
 
 // Laad contacten bij opstart
