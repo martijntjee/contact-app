@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #007BFF;
+}
+
+.submit-btn:hover {
+    background-color: #0069d9;
+}
+
+#contactList {
+    margin-top: 30px;
+}
+
+.contact-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+/* Categorie-veldset styling */
+.fieldset-category {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #f9f9f9;
+}
+
+.fieldset-category legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Geavanceerde sectie */
+.advanced-section {
+    margin: 15px 0;
+    padding: 10px;
+    border-left: 3px solid #007BFF;
+}
+
+/* Range slider aanpassingen */
+input[type="range"] {
+    width: 70%;
+    vertical-align: middle;
+}
+
+/* Responsieve tabel voor kleine schermen */
+@media (max-width: 480px) {
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    select, input:not([type="checkbox"]) {
+        width: 100% !important;
+    }
+}
