@@ -69,7 +69,7 @@ takePhotoButton.addEventListener("click", () => {
 const profilesContainer = document.getElementById("profilesContainer");
 const profileTemplate = document.getElementById("profileTemplate");
 
-fetch("/api/contacts")
+fetch("http://127.0.0.1:6789/api/contacts")
     .then((res) => res.json())
     .then((contacts) => {
         contacts.forEach((contact) => {
