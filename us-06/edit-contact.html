@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Bewerken</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="edit-contact.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' data:;
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+">
+</head>
+
+<body>
+    <h1>Bewerk Contact</h1>
+
+    <form id="editContactForm">
+        <label>Naam*</label>
+        <input type="text" id="editName" required />
+
+        <label>Telefoon*</label>
+        <input type="tel" id="editPhone" required />
+
+        <label>E-mail</label>
+        <input type="email" id="editEmail" />
+
+        <div id="editSocialMediaFields"></div>
+        <button type="button" onclick="addSocialMediaField()">+ Social Media</button>
+
+        <label>Geboortedatum</label>
+        <input type="date" id="editBirthdate" />
+
+        <label>Jubileum</label>
+        <input type="date" id="editAnniversary" />
+
+        <div id="editPronounsFields"></div>
+        <button type="button" onclick="addPronounField()">+ Voornaamwoord</button>
+
+        <label>Bedrijf</label>
+        <input type="text" id="editCompany" />
+
+        <label>Functie</label>
+        <input type="text" id="editJobTitle" />
+
+        <h3>Adres</h3>
+        <input type="text" id="editStreet" placeholder="Straat" />
+        <input type="text" id="editCity" placeholder="Stad" />
+        <input type="text" id="editPostalCode" placeholder="Postcode" />
+        <input type="text" id="editCountry" placeholder="Land" />
+
+        <div id="editCustomFields"></div>
+        <button type="button" onclick="addCustomField()">+ Aangepast veld</button>
+
+        <br><br>
+        <button type="submit">Opslaan</button>
+    </form>
+
+    <script src="edit-contact.js"></script>
+</body>
+
+</html>

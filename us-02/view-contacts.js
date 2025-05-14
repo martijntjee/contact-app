@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Verzamel alle formuliervelden
             const contact = {
+                id: crypto.randomUUID(), // ✅ Unieke ID toevoegen
                 name: name.value.trim(),
                 phone: phone.value.trim(),
                 email: document.getElementById('email').value.trim(),
@@ -65,16 +66,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const contactsContainer = document.getElementById('contactsContainer');
     const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
 
-    // Controleer of er contacten zijn opgeslagen
     if (contacts.length === 0) {
-        contactsContainer.innerHTML = '<p>Nog geen contacten toegevoegd.</p>';
+        if (contactsContainer) {
+            contactsContainer.innerHTML = '<p>Nog geen contacten toegevoegd.</p>';
+        }
         return;
     }
 
-    // Loop door de contacten en voeg ze toe aan de container
+    // Contacten tonen
     contacts.forEach(contact => {
         const card = document.createElement('div');
         card.className = 'contact-card';
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function () {
+            window.location.href = `../us-06/edit-contact.html?id=${contact.id}`;
+        });
+
         card.innerHTML = `
             <h3>${contact.name}</h3>
             <p><strong>📞 Telefoon:</strong> ${contact.phone}</p>
@@ -98,11 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
             ${contact.customFields && contact.customFields.map(f => `<p><strong>${f.key}:</strong> 
                 ${f.value}</p>`).join('')}
         `;
-        contactsContainer.appendChild(card);
+        if (contactsContainer) {
+            contactsContainer.appendChild(card);
+        }
     });
 });
 
-// Functies voor het ophalen van dynamische velden
+// Hulpfuncties
 
 function addSocialMediaField() {
     const container = document.getElementById('socialMediaFields');
@@ -135,8 +144,6 @@ function addCustomField() {
     `;
     container.appendChild(field);
 }
-
-// Hulpfuncties om dynamische velden te verzamelen
 
 function getDynamicFields(keyClass, valueClass) {
     const keys = document.getElementsByClassName(keyClass);
