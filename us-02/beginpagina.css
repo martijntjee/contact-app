@@ -1,0 +1,71 @@
+/* Algemene stijl voor de beginpagina */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a8edea, #fed6e3); /* Groenblauw naar lichtroze */
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container stijl */
+.container {
+    text-align: center;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+/* Titel stijl */
+h1 {
+    font-size: 2.5rem;
+    color: #007b83; /* Groenblauw */
+    margin-bottom: 20px;
+}
+
+/* Paragraaf stijl */
+p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Knoppen groep */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Knop stijl */
+.btn {
+    background-color: #007b83; /* Groenblauw */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background-color: #005f63; /* Donkerder groenblauw */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Secundaire knop stijl */
+.btn-secondary {
+    background-color: #4caf50; /* Groen */
+}
+
+.btn-secondary:hover {
+    background-color: #3e8e41; /* Donkerder groen */
+}
