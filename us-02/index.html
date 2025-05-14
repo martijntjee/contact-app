@@ -6,13 +6,6 @@
     <title>Contact Toevoegen</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- PWA manifest -->
-    <link rel="manifest" href="manifest.json">
-    <!-- iOS ondersteuning -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Contact App">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
 </head>
 <body>
     <div class="container">
@@ -40,18 +33,7 @@
             <!-- Contactinformatie -->
             <fieldset class="fieldset-category">
                 <legend>📞 Contactinformatie</legend>
-                <div id="socialMediaFields">
-                    <div class="form-group">
-                        <label for="socialType">Social Media</label>
-                        <select class="socialType">
-                            <option value="">Kies platform...</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="twitter">Twitter</option>
-                            <option value="linkedin">LinkedIn</option>
-                        </select>
-                        <input type="text" class="social" placeholder="Gebruikersnaam">
-                    </div>
-                </div>
+                <div id="socialMediaFields"></div>
                 <button type="button" class="btn" onclick="addSocialMediaField()">+ Extra Social Media</button>
             </fieldset>
 
@@ -66,17 +48,8 @@
                     <label for="anniversary">Jubileum</label>
                     <input type="date" id="anniversary">
                 </div>
-                <div id="pronounsFields">
-                    <div class="form-group">
-                        <label for="pronouns">Voornaamwoorden</label>
-                        <select class="pronouns">
-                            <option value="">-</option>
-                            <option value="hij/hem">hij/hem</option>
-                            <option value="zij/haar">zij/haar</option>
-                            <option value="die/hen">die/hen</option>
-                        </select>
-                    </div>
-                </div>
+                <div id="pronounsFields"></div>
+                <button type="button" class="btn" onclick="addPronounsField()">+ Extra Voornaamwoorden</button>
             </fieldset>
 
             <!-- Werk -->
@@ -113,31 +86,21 @@
                 </div>
             </fieldset>
 
+        <div>
+    <input type="checkbox" id="noodcontact" name="noodcontact" checked />
+    <label for="scales">Noodcontact</label>
+  </div>
             <!-- Aangepaste Velden -->
             <div id="customFields"></div>
             <button type="button" class="btn" onclick="addCustomField()">+ Aangepast veld</button>
 
             <button type="submit" class="btn submit-btn">Contact Opslaan</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='view-contacts.html'">
+                Bekijk Contacten
+            </button>
+    
         </form>
-
-        <!-- Contactenlijst -->
-        <div id="contactList"></div>
     </div>
-
     <script src="script.js"></script>
-    <script>
-        // Registreer Service Worker voor PWA
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registratie succesvol');
-                    })
-                    .catch(err => {
-                        console.log('ServiceWorker registratie mislukt: ', err);
-                    });
-            });
-        }
-    </script>
 </body>
 </html>

@@ -1,239 +1,173 @@
-/* style.css */
-/* Algemene reset en basisstijl */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #a8edea, #fed6e3); /* Groenblauw naar lichtroze */
-    color: #333;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Container met moderne kaartstijl */
 .container {
-    max-width: 900px;
-    margin: 20px auto;
-    background-color: #ffffff;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  max-width: 900px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-/* Titels */
 h1 {
-    text-align: center;
-    color: #007b83; /* Groenblauw */
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+  text-align: center;
+  color: #007b83;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
 }
 
-h2 {
-    color: #007b83;
-    margin-top: 40px;
-    border-bottom: 2px solid #a8edea;
-    padding-bottom: 10px;
-}
-
-h3, h4 {
-    margin: 10px 0 5px;
-    font-weight: 600;
-    color: #333;
-}
-
-/* Formulierstijl */
 form .form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #555;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
 }
 
-input, select, textarea {
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    background-color: #f9f9f9;
+input, select {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
 }
 
-input:focus, select:focus, textarea:focus {
-    border-color: #007b83; /* Groenblauw */
-    background-color: #fff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 131, 0.5);
+input:focus, select:focus {
+  border-color: #007b83;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 131, 0.5);
 }
 
-/* Fieldset styling */
 .fieldset-category {
-    border: 1px solid #a8edea;
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 30px;
-    background-color: #e0f7f9; /* Lichtgroenblauw */
+  border: 1px solid #a8edea;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #e0f7f9;
 }
 
 .fieldset-category legend {
-    font-weight: bold;
-    color: #007b83; /* Groenblauw */
-    padding: 0 10px;
+  font-weight: bold;
+  color: #007b83;
+  padding: 0 10px;
 }
 
-/* Custom Fields */
 .custom-field {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .custom-field input {
-    flex: 1;
+  flex: 1;
 }
 
-/* Buttons */
 .btn {
-    background-color: #007b83; /* Groenblauw */
-    color: #ffffff;
-    border: none;
-    padding: 12px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+  background-color: #007b83;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
 }
 
 .btn:hover {
-    background-color: #005f63; /* Donkerder groenblauw */
+  background-color: #005f63;
 }
 
 .btn-small {
-    padding: 8px 12px;
-    font-size: 14px;
+  padding: 8px 12px;
+  font-size: 14px;
 }
 
 .btn-danger {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
 }
 
 .btn-danger:hover {
-    background-color: #c0392b;
+  background-color: #c0392b;
 }
 
 .submit-btn {
-    background-color: #4caf50;
-    width: 100%;
-    margin-top: 20px;
+  background-color: #4caf50;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .submit-btn:hover {
-    background-color: #3e8e41;
+  background-color: #3e8e41;
 }
 
-/* Contactkaart stijl */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  margin-top: 10px;
+  width: 100%;
+
+}
+
 #contactList {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .contact-card {
-    background-color: #ffffff;
-    border: 1px solid #a8edea;
-    padding: 20px 25px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #fff;
+  border: 1px solid #a8edea;
+  padding: 20px 25px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
 }
 
 .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.contact-card h3 {
-    color: #007b83; /* Groenblauw */
-    margin-top: 0;
-}
-
-.contact-card p {
-    margin: 5px 0;
-    color: #555;
-}
-
-/* Toastmeldingen */
 .toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #007b83; /* Groenblauw */
-    color: white;
-    padding: 14px 22px;
-    border-radius: 10px;
-    box-shadow: 0 0 14px rgba(0, 0, 0, 0.1);
-    animation: fadeInOut 3s ease forwards;
-    z-index: 9999;
-    font-size: 15px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #007b83;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 10px;
+  animation: fadeInOut 3s ease forwards;
+  z-index: 9999;
 }
 
 .toast-error {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
 }
 
 .toast-success {
-    background-color: #4caf50;
+  background-color: #4caf50;
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; transform: translateY(-20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    90% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-20px); }
-}
-
-/* Responsief gedrag */
-@media (max-width: 600px) {
-    .container {
-        padding: 20px;
-        margin: 20px;
-        border-radius: 10px;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    .custom-field {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
-    }
-
-    .fieldset-category {
-        padding: 15px;
-    }
-}
-
-/* PWA specifieke stijlen */
-@media (display-mode: standalone) {
-    body {
-        background: #fff;
-    }
-    
-    .container {
-        box-shadow: none;
-        border-radius: 0;
-        min-height: 100vh;
-        margin: 0;
-    }
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
 }
