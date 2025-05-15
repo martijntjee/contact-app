@@ -8,6 +8,13 @@ window.addEventListener('devicemotion', (event) => {
     console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
     if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
         document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+
+        // ✅ Toevoeging: redirect naar schud.html bij shake
+        const now = Date.now();
+        if (now - lastShakeTime > 1000) {
+            lastShakeTime = now;
+            window.location.href = 'schud.html';
+        }
     }
 });
 
