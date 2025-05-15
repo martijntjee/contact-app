@@ -80,7 +80,7 @@ function renderContacts() {
         const card = document.createElement('div');
         card.className = 'contact-card';
         card.innerHTML = `
-        <h3>${contact.name}</h3>
+        <h3>${contact.id}</h3>
         <p><strong>📞</strong> ${contact.phone}</p>
         ${contact.socialMedia.map(sm => `<p><strong>🌐</strong> ${sm.platform}: ${sm.username}</p>`).join('')}
         ${contact.birthdate ? `<p><strong>🎂</strong> ${contact.birthdate}</p>` : ''}
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
             customFields: collectCustomFields()
         };
 
-        if (!contact.name || !contact.phone) {
+        if (!contact.id || !contact.phone) {
             alert('Naam en telefoonnummer zijn verplicht!');
             return;
         }

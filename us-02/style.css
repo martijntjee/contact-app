@@ -172,3 +172,26 @@ input:focus, select:focus {
   100% { opacity: 0; transform: translateY(-20px); }
 }
 
+
+/* Stijl voor de verwijderknop */
+.delete-button {
+  background-color: #e74c3c; /* Rood voor een waarschuwingskleur */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Donkerder rood bij hover */
+  transform: scale(1.05); /* Iets groter bij hover */
+}
+
+.delete-button:active {
+  background-color: #a93226; /* Nog donkerder rood bij klikken */
+  transform: scale(0.95); /* Iets kleiner bij klikken */
+}
+

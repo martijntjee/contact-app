@@ -10,13 +10,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        const contact = contacts.find(c => c.id === contactId.toString()); // Zorg dat de ID's als strings worden vergeleken
+        const contact = contacts.find(c => c.id === contactId);
 
         if (!contact) {
             alert('Contact niet gevonden!');
             window.location.href = 'view-contacts.html';
             return;
         }
+
+        // Log de naam van het contact
+        console.log('Naam van het contact:', contact.id);
 
         renderContactForm(contact);
 
@@ -28,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function renderContactForm(contact) {
-        document.getElementById('editName').value = contact.name || '';
+        document.getElementById('editName').value = contact.id || '';
         document.getElementById('editPhone').value = contact.phone || '';
         document.getElementById('editEmail').value = contact.email || '';
         document.getElementById('editBirthdate').value = contact.birthdate || '';
@@ -162,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function renderContactForm(contact) {
-    document.getElementById('editName').value = contact.name || '';
+    document.getElementById('editName').value = contact.id || '';
     document.getElementById('editPhone').value = contact.phone || '';
     document.getElementById('editEmail').value = contact.email || '';
     document.getElementById('editBirthdate').value = contact.birthdate || '';
@@ -270,3 +273,4 @@ function getDynamicFields(keyClass, valueClass, isCustom = false) {
 
     return result;
 }
+
