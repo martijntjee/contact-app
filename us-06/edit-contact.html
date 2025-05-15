@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Bewerken</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="edit-contact.css">
+    <link rel="stylesheet" href="../us-02/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
@@ -16,48 +17,100 @@
 </head>
 
 <body>
-    <h1>Bewerk Contact</h1>
+    <div class="container">
+        <h1>Contact Bewerken</h1>
 
-    <form id="editContactForm">
-        <label>Naam*</label>
-        <input type="text" id="editName" required />
+        <form id="editContactForm" novalidate>
+            <!-- Basisgegevens -->
+            <fieldset class="fieldset-category">
+                <legend>📌 Basisgegevens</legend>
+                <div class="form-group">
+                    <label for="editName">Naam*</label>
+                    <input type="text" id="editName" required placeholder="Bijv. Jan Jansen">
+                    <small class="error-message" id="nameError">Naam is verplicht.</small>
+                </div>
+                <div class="form-group">
+                    <label for="editPhone">Telefoon*</label>
+                    <input type="tel" id="editPhone" required placeholder="Bijv. 0612345678">
+                    <small class="error-message" id="phoneError">Telefoonnummer is verplicht.</small>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">E-mail</label>
+                    <input type="email" id="editEmail" placeholder="Bijv. jan@voorbeeld.nl">
+                </div>
+            </fieldset>
 
-        <label>Telefoon*</label>
-        <input type="tel" id="editPhone" required />
+            <!-- Contactinformatie -->
+            <fieldset class="fieldset-category">
+                <legend>📞 Contactinformatie</legend>
+                <div id="editSocialMediaFields"></div>
+                <button type="button" class="btn" onclick="addSocialMediaField()">+ Extra Social Media</button>
+            </fieldset>
 
-        <label>E-mail</label>
-        <input type="email" id="editEmail" />
+            <!-- Persoonlijke Details -->
+            <fieldset class="fieldset-category">
+                <legend>👤 Persoonlijke Details</legend>
+                <div class="form-group">
+                    <label for="editBirthdate">Geboortedatum</label>
+                    <input type="date" id="editBirthdate">
+                </div>
+                <div class="form-group">
+                    <label for="editAnniversary">Jubileum</label>
+                    <input type="date" id="editAnniversary">
+                </div>
+                <div id="editPronounsFields"></div>
+                <button type="button" class="btn" onclick="addPronounField()">+ Extra Voornaamwoorden</button>
+            </fieldset>
 
-        <div id="editSocialMediaFields"></div>
-        <button type="button" onclick="addSocialMediaField()">+ Social Media</button>
+            <!-- Werk -->
+            <fieldset class="fieldset-category">
+                <legend>💼 Werk</legend>
+                <div class="form-group">
+                    <label for="editCompany">Bedrijf</label>
+                    <input type="text" id="editCompany" placeholder="Bijv. Acme BV">
+                </div>
+                <div class="form-group">
+                    <label for="editJobTitle">Functie</label>
+                    <input type="text" id="editJobTitle" placeholder="Bijv. Manager">
+                </div>
+            </fieldset>
 
-        <label>Geboortedatum</label>
-        <input type="date" id="editBirthdate" />
+            <!-- Adres -->
+            <fieldset class="fieldset-category">
+                <legend>🏠 Adres</legend>
+                <div class="form-group">
+                    <label for="editStreet">Straat</label>
+                    <input type="text" id="editStreet" placeholder="Bijv. Hoofdstraat 123">
+                </div>
+                <div class="form-group">
+                    <label for="editCity">Stad</label>
+                    <input type="text" id="editCity" placeholder="Bijv. Amsterdam">
+                </div>
+                <div class="form-group">
+                    <label for="editPostalCode">Postcode</label>
+                    <input type="text" id="editPostalCode" placeholder="Bijv. 1234 AB">
+                </div>
+                <div class="form-group">
+                    <label for="editCountry">Land</label>
+                    <input type="text" id="editCountry" placeholder="Bijv. Nederland">
+                </div>
+            </fieldset>
 
-        <label>Jubileum</label>
-        <input type="date" id="editAnniversary" />
+            <div>
+                <input type="checkbox" id="editEmergencyContact" name="editEmergencyContact" checked />
+                <label for="editEmergencyContact">Noodcontact</label>
+            </div>
 
-        <div id="editPronounsFields"></div>
-        <button type="button" onclick="addPronounField()">+ Voornaamwoord</button>
+            <!-- Aangepaste Velden -->
+            <div id="editCustomFields"></div>
+            <button type="button" class="btn" onclick="addCustomField()">+ Aangepast veld</button>
 
-        <label>Bedrijf</label>
-        <input type="text" id="editCompany" />
-
-        <label>Functie</label>
-        <input type="text" id="editJobTitle" />
-
-        <h3>Adres</h3>
-        <input type="text" id="editStreet" placeholder="Straat" />
-        <input type="text" id="editCity" placeholder="Stad" />
-        <input type="text" id="editPostalCode" placeholder="Postcode" />
-        <input type="text" id="editCountry" placeholder="Land" />
-
-        <div id="editCustomFields"></div>
-        <button type="button" onclick="addCustomField()">+ Aangepast veld</button>
-
-        <br><br>
-        <button type="submit">Opslaan</button>
-    </form>
+            <button type="submit" class="btn submit-btn">Wijzigingen Opslaan</button>
+             <button type="button" class="btn btn-secondary" onclick="window.location.href='../us-02/view-contacts.html'">
+                Terug naar Contacten
+            </button>
+        </form>
+    </div>
 
     <script src="edit-contact.js"></script>
 </body>

@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         card.innerHTML = `
-            <h3>${contact.name}</h3>
+            <h3>${contact.id}</h3>
             <p><strong>📞 Telefoon:</strong> ${contact.phone}</p>
             ${contact.email ? `<p><strong>📧 E-mail:</strong> ${contact.email}</p>` : ''}
             ${contact.socialMedia && contact.socialMedia.length > 0 ? contact.socialMedia.map(sm => `

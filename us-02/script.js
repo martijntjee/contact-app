@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderContacts();
 
-    form.addEventListener('submit', function (e) {
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
         const name = document.getElementById('name').value.trim();
@@ -14,72 +14,72 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Naam en telefoonnummer zijn verplicht!');
             return;
         }
-
         const contact = {
-            id: Date.now(),
-            name,
-            phone,
-            email: '',
-            socialMedia: collectSocialMedia(),
-            birthdate: document.getElementById('birthdate')?.value || '',
-            anniversary: document.getElementById('anniversary')?.value || '',
-            pronouns: collectPronouns(),
-            company: document.getElementById('company')?.value.trim() || '',
-            jobTitle: document.getElementById('jobTitle')?.value.trim() || '',
+            id: Date.now().toString(), // Unieke ID gebaseerd op de huidige tijd
+            name: document.getElementById('name').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
             address: {
-                street: document.getElementById('street')?.value.trim() || '',
-                city: document.getElementById('city')?.value.trim() || '',
-                postalCode: document.getElementById('postalCode')?.value.trim() || '',
-                country: document.getElementById('country')?.value.trim() || ''
+                street: document.getElementById('street').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                postalCode: document.getElementById('postalCode').value.trim(),
+                country: document.getElementById('country').value.trim(),
             },
-            customFields: collectCustomFields()
         };
 
-        saveContact(contact);
-        form.reset();
-        document.getElementById('socialMediaFields').innerHTML = '';
-        document.getElementById('pronounsFields').innerHTML = '';
-        document.getElementById('customFields').innerHTML = '';
-        renderContacts();
-        showToast('Contact succesvol opgeslagen!', 'success');
-    });
-
-    function collectSocialMedia() {
-        const fields = document.querySelectorAll('#socialMediaFields .form-group');
-        return Array.from(fields).map(field => {
-            const platform = field.querySelector('.socialType').value.trim();
-            const username = field.querySelector('.social').value.trim();
-            return platform && username ? { platform, username } : null;
-        }).filter(Boolean);
-    }
-
-    function collectPronouns() {
-        const fields = document.querySelectorAll('#pronounsFields .form-group .pronouns');
-        return Array.from(fields).map(field => field.value.trim()).filter(Boolean);
-    }
-
-    function collectCustomFields() {
-        const fields = document.querySelectorAll('#customFields .form-group');
-        return Array.from(fields).map(field => {
-            const key = field.querySelector('.custom-key').value.trim();
-            const value = field.querySelector('.custom-value').value.trim();
-            return key && value ? { key, value } : null;
-        }).filter(Boolean);
-    }
-
-    function saveContact(contact) {
         const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
         contacts.push(contact);
         localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
 
-    function renderContacts() {
-        const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        contactList.innerHTML = '';
-        contacts.forEach((contact, index) => {
-            const card = document.createElement('div');
-            card.className = 'contact-card';
-            card.innerHTML = `
+        alert('Contact succesvol opgeslagen!');
+        window.location.href = 'view-contacts.html';
+    });
+
+    saveContact(contact);
+    form.reset();
+    document.getElementById('socialMediaFields').innerHTML = '';
+    document.getElementById('pronounsFields').innerHTML = '';
+    document.getElementById('customFields').innerHTML = '';
+    renderContacts();
+    showToast('Contact succesvol opgeslagen!', 'success');
+});
+
+function collectSocialMedia() {
+    const fields = document.querySelectorAll('#socialMediaFields .form-group');
+    return Array.from(fields).map(field => {
+        const platform = field.querySelector('.socialType').value.trim();
+        const username = field.querySelector('.social').value.trim();
+        return platform && username ? { platform, username } : null;
+    }).filter(Boolean);
+}
+
+function collectPronouns() {
+    const fields = document.querySelectorAll('#pronounsFields .form-group .pronouns');
+    return Array.from(fields).map(field => field.value.trim()).filter(Boolean);
+}
+
+function collectCustomFields() {
+    const fields = document.querySelectorAll('#customFields .form-group');
+    return Array.from(fields).map(field => {
+        const key = field.querySelector('.custom-key').value.trim();
+        const value = field.querySelector('.custom-value').value.trim();
+        return key && value ? { key, value } : null;
+    }).filter(Boolean);
+}
+
+function saveContact(contact) {
+    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contacts.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+}
+
+function renderContacts() {
+    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contactList.innerHTML = '';
+    contacts.forEach((contact, index) => {
+        const card = document.createElement('div');
+        card.className = 'contact-card';
+        card.innerHTML = `
         <h3>${contact.name}</h3>
         <p><strong>📞</strong> ${contact.phone}</p>
         ${contact.socialMedia.map(sm => `<p><strong>🌐</strong> ${sm.platform}: ${sm.username}</p>`).join('')}
@@ -94,26 +94,26 @@ document.addEventListener('DOMContentLoaded', () => {
         ${contact.customFields.map(f => `<p><strong>${f.key}</strong>: ${f.value}</p>`).join('')}
         <button class="btn btn-danger" onclick="deleteContact(${index})">Verwijderen</button>
       `;
-            contactList.appendChild(card);
-        });
-    }
+        contactList.appendChild(card);
+    });
+}
 
-    window.deleteContact = function (index) {
-        const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        contacts.splice(index, 1);
-        localStorage.setItem('contacts', JSON.stringify(contacts));
-        renderContacts();
-        showToast('Contact verwijderd!', 'error');
-    };
+window.deleteContact = function (index) {
+    const contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    contacts.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    renderContacts();
+    showToast('Contact verwijderd!', 'error');
+};
 
-    function showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
-});
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
 
 function addSocialMediaField() {
     const container = document.getElementById('socialMediaFields');
