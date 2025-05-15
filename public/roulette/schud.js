@@ -1,4 +1,3 @@
-// schud.js
 let lastShakeTime = 0;
 
 function getContacts() {
@@ -34,60 +33,55 @@ function handleShake() {
     }
 }
 
-function initShakeDetection() {
-    let isRequestingPermission = false;
+function initGyroShakeDetection() {
+    let lastAlpha = null, lastBeta = null, lastGamma = null;
+    const threshold = 5; // drempel, hogere waarde = minder gevoelig
 
-    function startShakeDetection() {
-        let lastX = null, lastY = null, lastZ = null;
-        const threshold = 2;                                         // Of 3, voor iets minder gevoelig
-        window.addEventListener("devicemotion", (event) => {
-            const acceleration = event.accelerationIncludingGravity ||
-                { x: 0, y: 0, z: 0 };
+    function onDeviceOrientation(event) {
+        const { alpha, beta, gamma } = event;
+        if (lastAlpha !== null) {
+            const deltaAlpha = Math.abs(alpha - lastAlpha);
+            const deltaBeta = Math.abs(beta - lastBeta);
+            const deltaGamma = Math.abs(gamma - lastGamma);
 
-            if (lastX !== null) {
-                const deltaX = Math.abs(acceleration.x - lastX);
-                const deltaY = Math.abs(acceleration.y - lastY);
-                const deltaZ = Math.abs(acceleration.z - lastZ);
-
-                if ((deltaX + deltaY + deltaZ) > threshold) {
-                    handleShake();
-                    navigator.vibrate?.(200); // feedback
-                }
-
+            if ((deltaAlpha + deltaBeta + deltaGamma) > threshold) {
+                handleShake();
+                navigator.vibrate?.(200);
             }
-
-            lastX = acceleration.x;
-            lastY = acceleration.y;
-            lastZ = acceleration.z;
-        });
+        }
+        lastAlpha = alpha;
+        lastBeta = beta;
+        lastGamma = gamma;
     }
 
-    // Voor iOS 13+
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+        let isRequestingPermission = false;
         document.body.addEventListener('click', () => {
             if (!isRequestingPermission) {
                 isRequestingPermission = true;
-                DeviceMotionEvent.requestPermission()
+                DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         isRequestingPermission = false;
                         if (permissionState === 'granted') {
-                            startShakeDetection();
+                            window.addEventListener('deviceorientation', onDeviceOrientation);
+                        } else {
+                            alert('Toestemming voor gyroscoop geweigerd.');
                         }
                     })
                     .catch(console.error);
             }
         }, { once: true });
 
-        // alert('Klik ergens op het scherm om toestemming te vragen voor schudden');
+        alert('Klik ergens op het scherm om toestemming te geven voor schuddetectie');
     } else {
-        // Andere browsers
-        startShakeDetection();
+        // Voor browsers zonder toestemming-vraag
+        window.addEventListener('deviceorientation', onDeviceOrientation);
     }
 }
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    initShakeDetection();
+    initGyroShakeDetection();
 
     // Laat zien dat het werkt
     const initialContact = pickRandomContact();
