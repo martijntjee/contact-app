@@ -36,25 +36,26 @@ function handleShake() {
 
 function initShakeDetection() {
     let isRequestingPermission = false;
-    
+
     function startShakeDetection() {
         let lastX = null, lastY = null, lastZ = null;
-        const threshold = 10; // Hoger = minder gevoelig
-        
+        const threshold = 2;                                         // Of 3, voor iets minder gevoelig
         window.addEventListener("devicemotion", (event) => {
-            const acceleration = event.accelerationIncludingGravity || 
-                                { x: 0, y: 0, z: 0 };
-            
+            const acceleration = event.accelerationIncludingGravity ||
+                { x: 0, y: 0, z: 0 };
+
             if (lastX !== null) {
                 const deltaX = Math.abs(acceleration.x - lastX);
                 const deltaY = Math.abs(acceleration.y - lastY);
                 const deltaZ = Math.abs(acceleration.z - lastZ);
-                
+
                 if ((deltaX + deltaY + deltaZ) > threshold) {
                     handleShake();
+                    navigator.vibrate?.(200); // feedback
                 }
+
             }
-            
+
             lastX = acceleration.x;
             lastY = acceleration.y;
             lastZ = acceleration.z;
@@ -76,8 +77,8 @@ function initShakeDetection() {
                     .catch(console.error);
             }
         }, { once: true });
-        
-        alert('Klik ergens op het scherm om toestemming te vragen voor schudden');
+
+        // alert('Klik ergens op het scherm om toestemming te vragen voor schudden');
     } else {
         // Andere browsers
         startShakeDetection();
@@ -87,7 +88,7 @@ function initShakeDetection() {
 // Init
 document.addEventListener('DOMContentLoaded', () => {
     initShakeDetection();
-    
+
     // Laat zien dat het werkt
     const initialContact = pickRandomContact();
     showContact(initialContact);
