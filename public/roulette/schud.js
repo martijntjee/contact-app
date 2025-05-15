@@ -9,6 +9,8 @@ window.addEventListener('devicemotion', (event) => {
     document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
 });
 
+document.getElementById('debug').textContent += 'Schuddetectie geactiveerd!';
+
 function getContacts() {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
 }
