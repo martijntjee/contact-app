@@ -39,7 +39,7 @@ function initShakeDetection() {
     
     function startShakeDetection() {
         let lastX = null, lastY = null, lastZ = null;
-        const threshold = 15; // Hoger = minder gevoelig
+        const threshold = 10; // Hoger = minder gevoelig
         
         window.addEventListener("devicemotion", (event) => {
             const acceleration = event.accelerationIncludingGravity || 
@@ -84,24 +84,9 @@ function initShakeDetection() {
     }
 }
 
-// Voor demo-doeleinden - knop voor desktop
-function addManualShakeButton() {
-    if (!('ontouchstart' in window)) {
-        const btn = document.createElement('button');
-        btn.textContent = 'Klik voor random contact';
-        btn.style.marginTop = '20px';
-        btn.onclick = () => {
-            const randomContact = pickRandomContact();
-            showContact(randomContact);
-        };
-        document.body.appendChild(btn);
-    }
-}
-
 // Init
 document.addEventListener('DOMContentLoaded', () => {
     initShakeDetection();
-    addManualShakeButton();
     
     // Laat zien dat het werkt
     const initialContact = pickRandomContact();
