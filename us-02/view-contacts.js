@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ${contact.company ? `<p><strong>🏢 Bedrijf:</strong> ${contact.company}</p>` : ''}
             ${contact.jobTitle ? `<p><strong>💼 Functie:</strong> ${contact.jobTitle}</p>` : ''}
             ${contact.address && (contact.address.street || contact.address.city ||
-                    contact.address.postalCode || contact.address.country) ? `
+                contact.address.postalCode || contact.address.country) ? `
                 <p><strong>🏠 Adres:</strong> ${contact.address.street}, ${contact.address.city}, 
                 ${contact.address.postalCode}, ${contact.address.country}</p>
             ` : ''}
@@ -49,3 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log("Service Worker geregistreerd"))
+        .catch(err => console.log("Registratie mislukt", err));
+}
