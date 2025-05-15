@@ -1,0 +1,197 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #a8edea, #fed6e3);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+h1 {
+  text-align: center;
+  color: #007b83;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+form .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+}
+
+input, select {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+  border-color: #007b83;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 131, 0.5);
+}
+
+.fieldset-category {
+  border: 1px solid #a8edea;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #e0f7f9;
+}
+
+.fieldset-category legend {
+  font-weight: bold;
+  color: #007b83;
+  padding: 0 10px;
+}
+
+.custom-field {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.custom-field input {
+  flex: 1;
+}
+
+.btn {
+  background-color: #007b83;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #005f63;
+}
+
+.btn-small {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.submit-btn {
+  background-color: #4caf50;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #3e8e41;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  margin-top: 10px;
+  width: 100%;
+
+}
+
+#contactList {
+  margin-top: 50px;
+}
+
+.contact-card {
+  background-color: #fff;
+  border: 1px solid #a8edea;
+  padding: 20px 25px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #007b83;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 10px;
+  animation: fadeInOut 3s ease forwards;
+  z-index: 9999;
+}
+
+.toast-error {
+  background-color: #e74c3c;
+}
+
+.toast-success {
+  background-color: #4caf50;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+
+/* Stijl voor de verwijderknop */
+.delete-button {
+  background-color: #e74c3c; /* Rood voor een waarschuwingskleur */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Donkerder rood bij hover */
+  transform: scale(1.05); /* Iets groter bij hover */
+}
+
+.delete-button:active {
+  background-color: #a93226; /* Nog donkerder rood bij klikken */
+  transform: scale(0.95); /* Iets kleiner bij klikken */
+}
+
