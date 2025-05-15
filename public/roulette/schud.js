@@ -6,7 +6,9 @@ window.addEventListener('devicemotion', (event) => {
     const y = acceleration.y;
     const z = acceleration.z;
     console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
-    document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+    if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
+        document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+    }
 });
 
 document.getElementById('debug').textContent += 'Schuddetectie geactiveerd!';
