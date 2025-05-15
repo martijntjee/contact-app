@@ -1,3 +1,4 @@
+// schud.js
 let lastShakeTime = 0;
 
 function getContacts() {
@@ -19,37 +20,90 @@ function showContact(contact) {
         callBtn.href = `tel:${contact.phone}`;
         callBtn.style.display = 'inline-block';
     } else {
-        contactDiv.textContent = "Geen contacten beschikbaar.";
+        contactDiv.textContent = "Voeg eerst contacten toe.";
         callBtn.style.display = 'none';
     }
 }
 
-// Shake detection
-window.addEventListener("devicemotion", function (event) {
-    const acc = event.accelerationIncludingGravity;
-
-    const shakeThreshold = 15;
+function handleShake() {
     const now = Date.now();
-
-    if (!acc) return;
-
-    const totalAcceleration = Math.abs(acc.x) + Math.abs(acc.y) + Math.abs(acc.z);
-
-    if (totalAcceleration > shakeThreshold && now - lastShakeTime > 1000) {
+    if (now - lastShakeTime > 1000) { // Minstens 1 seconde tussen shakes
         lastShakeTime = now;
         const randomContact = pickRandomContact();
         showContact(randomContact);
     }
-});
-
-// Vraag toestemming (voor iOS 13+)
-if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    DeviceMotionEvent.requestPermission()
-        .then(permissionState => {
-            if (permissionState === 'granted') {
-                // Je mag schuddetectie gebruiken
-            }
-        })
-        .catch(console.error);
 }
 
+function initShakeDetection() {
+    let isRequestingPermission = false;
+    
+    function startShakeDetection() {
+        let lastX = null, lastY = null, lastZ = null;
+        const threshold = 15; // Hoger = minder gevoelig
+        
+        window.addEventListener("devicemotion", (event) => {
+            const acceleration = event.accelerationIncludingGravity || 
+                                { x: 0, y: 0, z: 0 };
+            
+            if (lastX !== null) {
+                const deltaX = Math.abs(acceleration.x - lastX);
+                const deltaY = Math.abs(acceleration.y - lastY);
+                const deltaZ = Math.abs(acceleration.z - lastZ);
+                
+                if ((deltaX + deltaY + deltaZ) > threshold) {
+                    handleShake();
+                }
+            }
+            
+            lastX = acceleration.x;
+            lastY = acceleration.y;
+            lastZ = acceleration.z;
+        });
+    }
+
+    // Voor iOS 13+
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        document.body.addEventListener('click', () => {
+            if (!isRequestingPermission) {
+                isRequestingPermission = true;
+                DeviceMotionEvent.requestPermission()
+                    .then(permissionState => {
+                        isRequestingPermission = false;
+                        if (permissionState === 'granted') {
+                            startShakeDetection();
+                        }
+                    })
+                    .catch(console.error);
+            }
+        }, { once: true });
+        
+        alert('Klik ergens op het scherm om toestemming te vragen voor schudden');
+    } else {
+        // Andere browsers
+        startShakeDetection();
+    }
+}
+
+// Voor demo-doeleinden - knop voor desktop
+function addManualShakeButton() {
+    if (!('ontouchstart' in window)) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Klik voor random contact';
+        btn.style.marginTop = '20px';
+        btn.onclick = () => {
+            const randomContact = pickRandomContact();
+            showContact(randomContact);
+        };
+        document.body.appendChild(btn);
+    }
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+    initShakeDetection();
+    addManualShakeButton();
+    
+    // Laat zien dat het werkt
+    const initialContact = pickRandomContact();
+    showContact(initialContact);
+});
