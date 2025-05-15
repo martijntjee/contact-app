@@ -1,5 +1,14 @@
 let lastShakeTime = 0;
 
+window.addEventListener('devicemotion', (event) => {
+    const acceleration = event.accelerationIncludingGravity;
+    const x = acceleration.x;
+    const y = acceleration.y;
+    const z = acceleration.z;
+    console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
+    document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+});
+
 function getContacts() {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
 }
