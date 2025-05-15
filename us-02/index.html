@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Toevoegen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Toevoegen</h1>
+        <form id="contactForm" novalidate>
+            <!-- Basisgegevens -->
+            <fieldset class="fieldset-category">
+                <legend>📌 Basisgegevens</legend>
+                <div class="form-group">
+                    <label for="name">Naam*</label>
+                    <input type="text" id="name" required placeholder="Bijv. Jan Jansen">
+                    <small class="error-message" id="nameError">Naam is verplicht.</small>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefoon*</label>
+                    <input type="tel" id="phone" required placeholder="Bijv. 0612345678">
+                    <small class="error-message" id="phoneError">Telefoonnummer is verplicht.</small>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Bijv. jan@voorbeeld.nl">
+                </div>
+            </fieldset>
+
+            <!-- Contactinformatie -->
+            <fieldset class="fieldset-category">
+                <legend>📞 Contactinformatie</legend>
+                <div id="socialMediaFields"></div>
+                <button type="button" class="btn" onclick="addSocialMediaField()">+ Extra Social Media</button>
+            </fieldset>
+
+            <!-- Persoonlijke Details -->
+            <fieldset class="fieldset-category">
+                <legend>👤 Persoonlijke Details</legend>
+                <div class="form-group">
+                    <label for="birthdate">Geboortedatum</label>
+                    <input type="date" id="birthdate">
+                </div>
+                <div class="form-group">
+                    <label for="anniversary">Jubileum</label>
+                    <input type="date" id="anniversary">
+                </div>
+                <div id="pronounsFields"></div>
+                <button type="button" class="btn" onclick="addPronounsField()">+ Extra Voornaamwoorden</button>
+            </fieldset>
+
+            <!-- Werk -->
+            <fieldset class="fieldset-category">
+                <legend>💼 Werk</legend>
+                <div class="form-group">
+                    <label for="company">Bedrijf</label>
+                    <input type="text" id="company" placeholder="Bijv. Acme BV">
+                </div>
+                <div class="form-group">
+                    <label for="jobTitle">Functie</label>
+                    <input type="text" id="jobTitle" placeholder="Bijv. Manager">
+                </div>
+            </fieldset>
+
+            <!-- Adres -->
+            <fieldset class="fieldset-category">
+                <legend>🏠 Adres</legend>
+                <div class="form-group">
+                    <label for="street">Straat</label>
+                    <input type="text" id="street" placeholder="Bijv. Hoofdstraat 123">
+                </div>
+                <div class="form-group">
+                    <label for="city">Stad</label>
+                    <input type="text" id="city" placeholder="Bijv. Amsterdam">
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Postcode</label>
+                    <input type="text" id="postalCode" placeholder="Bijv. 1234 AB">
+                </div>
+                <div class="form-group">
+                    <label for="country">Land</label>
+                    <input type="text" id="country" placeholder="Bijv. Nederland">
+                </div>
+            </fieldset>
+
+        <div>
+    <input type="checkbox" id="noodcontact" name="noodcontact" checked />
+    <label for="scales">Noodcontact</label>
+  </div>
+            <!-- Aangepaste Velden -->
+            <div id="customFields"></div>
+            <button type="button" class="btn" onclick="addCustomField()">+ Aangepast veld</button>
+
+            <button type="submit" class="btn submit-btn">Contact Opslaan</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='view-contacts.html'">
+                Bekijk Contacten
+            </button>
+    
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
