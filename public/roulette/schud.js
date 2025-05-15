@@ -26,7 +26,7 @@ function showContact(contact) {
 
 function handleShake() {
     const now = Date.now();
-    if (now - lastShakeTime > 1000) { // Minstens 1 seconde tussen shakes
+    if (now - lastShakeTime > 1000) { // minstens 1 seconde tussen shakes
         lastShakeTime = now;
         const randomContact = pickRandomContact();
         showContact(randomContact);
@@ -35,7 +35,7 @@ function handleShake() {
 
 function initGyroShakeDetection() {
     let lastAlpha = null, lastBeta = null, lastGamma = null;
-    const threshold = 5; // drempel, hogere waarde = minder gevoelig
+    const threshold = 5;
 
     function onDeviceOrientation(event) {
         const { alpha, beta, gamma } = event;
@@ -54,36 +54,35 @@ function initGyroShakeDetection() {
         lastGamma = gamma;
     }
 
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        let isRequestingPermission = false;
-        document.body.addEventListener('click', () => {
-            if (!isRequestingPermission) {
-                isRequestingPermission = true;
-                DeviceOrientationEvent.requestPermission()
-                    .then(permissionState => {
-                        isRequestingPermission = false;
-                        if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', onDeviceOrientation);
-                        } else {
-                            alert('Toestemming voor gyroscoop geweigerd.');
-                        }
-                    })
-                    .catch(console.error);
-            }
-        }, { once: true });
+    const btn = document.getElementById('enableShakeBtn');
+    btn.style.display = 'inline-block';
 
-        alert('Klik ergens op het scherm om toestemming te geven voor schuddetectie');
-    } else {
-        // Voor browsers zonder toestemming-vraag
-        window.addEventListener('deviceorientation', onDeviceOrientation);
-    }
+    btn.addEventListener('click', () => {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('deviceorientation', onDeviceOrientation);
+                        btn.style.display = 'none';
+                        alert('Schuddetectie geactiveerd!');
+                    } else {
+                        alert('Toestemming geweigerd.');
+                    }
+                })
+                .catch(console.error);
+        } else {
+            // Oudere browsers zonder permissie vraag
+            window.addEventListener('deviceorientation', onDeviceOrientation);
+            btn.style.display = 'none';
+            alert('Schuddetectie geactiveerd!');
+        }
+    });
 }
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
     initGyroShakeDetection();
 
-    // Laat zien dat het werkt
+    // Laat een willekeurig contact zien als er al contacten zijn
     const initialContact = pickRandomContact();
     showContact(initialContact);
 });

@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Contacten App</title>
   <style>
-    body { font-family: Arial; text-align: center; padding: 2em; }
+    body { font-family: Arial, sans-serif; text-align: center; padding: 2em; }
     #contact { font-size: 1.5em; margin-top: 20px; }
-    #callBtn { display: none; margin-top: 20px; padding: 10px 20px; font-size: 1em; }
+    #callBtn { display: none; margin-top: 20px; padding: 10px 20px; font-size: 1em; text-decoration: none; background: #4CAF50; color: white; border-radius: 5px; }
+    #enableShakeBtn { padding: 10px 20px; font-size: 1em; }
   </style>
-  <link rel="manifest" href="../manifest.json">
 </head>
 <body>
   <h1>Schud om te bellen</h1>
-  <div id="contact">Schud je telefoon...</div>
-  <a id="callBtn" href="#" >Bel nu</a>
+  <button id="enableShakeBtn">Schuddetectie activeren</button>
 
-<h2>Hoe werkt het?</h2>
-<ol style="text-align: left; max-width: 500px; margin: 20px auto;">
-  <li>Voeg contacten toe aan localStorage (via browser console)</li>
-  <li>Schud je telefoon om een willekeurig contact te selecteren</li>
-  <li>Klik op "Bel nu" om te bellen</li>
-</ol>
+  <div id="contact">Schud je telefoon...</div>
+  <a id="callBtn" href="#">Bel nu</a>
+
+  <h2>Hoe werkt het?</h2>
+  <ol style="text-align: left; max-width: 500px; margin: 20px auto;">
+    <li>Voeg contacten toe aan localStorage (via browser console)</li>
+    <li>Schud je telefoon om een willekeurig contact te selecteren</li>
+    <li>Klik op "Bel nu" om te bellen</li>
+  </ol>
 
   <script src="schud.js"></script>
 </body>
