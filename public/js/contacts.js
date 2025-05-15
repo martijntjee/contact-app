@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         card.style.cursor = 'pointer';
 
         card.addEventListener('click', function () {
-            window.location.href = `../us-06/edit-contact.html?id=${contact.id}`;
+            window.location.href = `edit.html?id=${contact.id}`;
         });
 
         card.innerHTML = `
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
+    navigator.serviceWorker.register('../service-worker.js')
         .then(reg => console.log("Service Worker geregistreerd"))
         .catch(err => console.log("Registratie mislukt", err));
 }

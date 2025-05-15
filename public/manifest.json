@@ -1,11 +1,11 @@
 {
-  "name": "PWA MongoDB Example",
-  "short_name": "PWA Demo",
-  "description": "An example PWA with MongoDB integration",
+  "name": "Contacten App",
+  "short_name": "c-app",
+  "description": "Een app om contacten op te slaan en te beheren",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f6f2ea",
-  "theme_color": "#9d5df0",
+  "background_color": "#ffffff",
+  "theme_color": "#007b83",
   "icons": [
     {
       "src": "circle.svg",
