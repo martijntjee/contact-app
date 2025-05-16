@@ -1,0 +1,95 @@
+/* Algemene stijl */
+body {
+    margin: 0;
+    padding: 2em;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Container stijl */
+.container {
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Titel stijl */
+h1 {
+    font-size: 2.5rem;
+    color: #007b83;
+    margin-bottom: 20px;
+}
+
+/* Contact weergave */
+#contact {
+    font-size: 1.5em;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    color: #333;
+}
+
+/* Knoppen stijl */
+button, #callBtn {
+    background-color: #007b83;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#callBtn {
+    display: none;
+    text-decoration: none;
+}
+
+button:hover, #callBtn:hover {
+    background-color: #005f63;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Secundaire knoppen */
+#enableShakeBtn, #enableMotionBtn {
+    background-color: #4caf50;
+}
+
+#enableShakeBtn:hover, #enableMotionBtn:hover {
+    background-color: #3e8e41;
+}
+
+/* Responsive aanpassingen */
+@media (max-width: 600px) {
+    body {
+        padding: 1em;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    #contact {
+        font-size: 1.2em;
+    }
+}
