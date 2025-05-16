@@ -1,0 +1,7 @@
+| **Criteria**                         | **--** | **-** | +/- | +   | ++  | **Opmerkingen**                                                                       |
+| ------------------------------------ | ------ | ----- | --- | --- | --- | ------------------------------------------------------------------------------------- |
+| 1. Hulpvaardigheid als teamgenoot    |        |       |  X   |     |     | Eline helpte goed waar het kon, ondanks dat onze specialiteiten niet overeen kwamen qua code |
+| 2. Productiviteit / Concentratie     |        |       |     |     |  X   | Was altijd goed gefocust, en vrij productief, ze kan zich erg goed bezig houden met werk wat gedaan moet worden  |
+| 3. Communicatie / Proactieve houding |        |       |     |  X   |     | Communiceert duidelijk, vroeg elke dag waar ik was, en zei het gelijk wanneer 1 va onze teamgenoten afgeleid was    |
+| Tip                                  |        |       |     |     |     | Je kan soms vrijsnel zijn in je werk, waardoor je tempo lastig bij te houden is en je gelijk weer zoekt naar iets nieuws om te doen, terwijl dit er niet altijd kan zijn                                                               |
+| Top                                  |        |       |     |     |     | Blijf zo doorgaan! Je werkt goed in een project, en je hebt een mooie houding tijdens het werken                                                                    |
