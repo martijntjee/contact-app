@@ -9,7 +9,6 @@ window.addEventListener('devicemotion', (event) => {
     if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
         document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
 
-        // ✅ Toevoeging: redirect naar schud.html bij shake
         const now = Date.now();
         if (now - lastShakeTime > 1000) {
             lastShakeTime = now;
@@ -18,7 +17,7 @@ window.addEventListener('devicemotion', (event) => {
     }
 });
 
-document.getElementById('debug').textContent += 'Schuddetectie geactiveerd!';
+document.getElementById('debug').textContent += 'Schuddetectie geactiveerd!\n';
 
 function getContacts() {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
@@ -46,7 +45,7 @@ function showContact(contact) {
 
 function handleShake() {
     const now = Date.now();
-    if (now - lastShakeTime > 1000) { // minstens 1 seconde tussen shakes
+    if (now - lastShakeTime > 1000) {
         lastShakeTime = now;
         const randomContact = pickRandomContact();
         showContact(randomContact);
@@ -75,34 +74,47 @@ function initGyroShakeDetection() {
     }
 
     const btn = document.getElementById('enableShakeBtn');
-    btn.style.display = 'inline-block';
 
-    btn.addEventListener('click', () => {
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        window.addEventListener('deviceorientation', onDeviceOrientation);
-                        btn.style.display = 'none';
-                        alert('Schuddetectie geactiveerd!');
-                    } else {
-                        alert('Toestemming geweigerd.');
-                    }
-                })
-                .catch(console.error);
-        } else {
-            // Oudere browsers zonder permissie vraag
-            window.addEventListener('deviceorientation', onDeviceOrientation);
-            btn.style.display = 'none';
-            alert('Schuddetectie geactiveerd!');
-        }
-    });
+    if (typeof DeviceOrientationEvent?.requestPermission === 'function') {
+        // iOS: toestemming vragen
+        DeviceOrientationEvent.requestPermission()
+            .then(state => {
+                if (state === 'granted') {
+                    window.addEventListener('deviceorientation', onDeviceOrientation);
+                    btn.style.display = 'none';
+                    console.log('Schuddetectie automatisch geactiveerd!');
+                } else {
+                    // Fallback naar knop
+                    btn.style.display = 'inline-block';
+                    btn.addEventListener('click', () => {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(newState => {
+                                if (newState === 'granted') {
+                                    window.addEventListener('deviceorientation', onDeviceOrientation);
+                                    btn.style.display = 'none';
+                                    alert('Schuddetectie geactiveerd!');
+                                } else {
+                                    alert('Toestemming geweigerd.');
+                                }
+                            });
+                    });
+                }
+            })
+            .catch(err => {
+                console.error('Fout bij vragen van toestemming:', err);
+                btn.style.display = 'inline-block';
+            });
+    } else {
+        // Android of oude browsers
+        window.addEventListener('deviceorientation', onDeviceOrientation);
+        btn.style.display = 'none';
+        console.log('Schuddetectie gestart zonder toestemming.');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     initGyroShakeDetection();
 
-    // Laat een willekeurig contact zien als er al contacten zijn
     const initialContact = pickRandomContact();
     showContact(initialContact);
 });
