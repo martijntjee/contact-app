@@ -22,8 +22,6 @@ function enableMotionListener() {
         }
     });
 
-    const debug = document.getElementById('debug');
-    if (debug) debug.textContent += 'Schuddetectie geactiveerd!\n';
 }
 
 function getContacts() {
