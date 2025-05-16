@@ -29,21 +29,16 @@
     }
   </style>
   <link rel="manifest" href="/manifest.json">
-      <link rel="stylesheet" href="schud.css">
-
+  <link rel="stylesheet" href="schud.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
   <h1>Willekeurig Contact</h1>
   <div id="contact">...</div>
   <a id="callBtn" href="#">Bel nu</a>
-  <button id="enableMotionBtn">Schuddetectie activeren</button>
+  <button id="enableMotionBtn" style="display:none;">Activeer bewegingsdetectie</button>
   <button id="enableShakeBtn" style="display:none;">Activeer gyroscopische schuddetectie</button>
-<button id="enableMotionBtn" style="display:none;">Activeer bewegingsdetectie</button>
-
-
 
   <script>
     function getContacts() {
@@ -75,6 +70,7 @@
       showContact(contact);
     });
   </script>
+  <script src="schud.js"></script>
 </body>
 
 </html>
