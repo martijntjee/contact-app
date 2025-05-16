@@ -1,28 +1,29 @@
 let lastShakeTime = 0;
 
-// Detectie op basis van acceleratie
-window.addEventListener('devicemotion', (event) => {
-    const acceleration = event.accelerationIncludingGravity;
-    const x = acceleration.x;
-    const y = acceleration.y;
-    const z = acceleration.z;
-    console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
-    if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
-        const debug = document.getElementById('debug');
-        if (debug) {
-            debug.textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
-        }
+function enableMotionListener() {
+    window.addEventListener('devicemotion', (event) => {
+        const acceleration = event.accelerationIncludingGravity;
+        const x = acceleration.x;
+        const y = acceleration.y;
+        const z = acceleration.z;
+        console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
+        if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
+            const debug = document.getElementById('debug');
+            if (debug) {
+                debug.textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+            }
 
-        const now = Date.now();
-        if (now - lastShakeTime > 1000) {
-            lastShakeTime = now;
-            window.location.href = 'schud.html';
+            const now = Date.now();
+            if (now - lastShakeTime > 1000) {
+                lastShakeTime = now;
+                window.location.href = 'schud.html';
+            }
         }
-    }
-});
+    });
 
-const debug = document.getElementById('debug');
-if (debug) debug.textContent += 'Schuddetectie geactiveerd!\n';
+    const debug = document.getElementById('debug');
+    if (debug) debug.textContent += 'Schuddetectie geactiveerd!\n';
+}
 
 function getContacts() {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
@@ -114,8 +115,32 @@ function initGyroShakeDetection() {
     }
 }
 
+function initMotionPermission() {
+    const motionBtn = document.getElementById('enableMotionBtn');
+    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+        motionBtn.style.display = 'inline-block';
+        motionBtn.addEventListener('click', () => {
+            DeviceMotionEvent.requestPermission().then(response => {
+                if (response === 'granted') {
+                    enableMotionListener();
+                    motionBtn.style.display = 'none';
+                    console.log('Motion geactiveerd!');
+                } else {
+                    alert('Bewegingsdetectie geweigerd.');
+                }
+            }).catch(err => {
+                console.error('Fout bij bewegingspermissie:', err);
+            });
+        });
+    } else {
+        enableMotionListener(); // Voor Android of normale browsers
+        motionBtn.style.display = 'none';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initGyroShakeDetection();
+    initMotionPermission();
 
     const initialContact = pickRandomContact();
     showContact(initialContact);

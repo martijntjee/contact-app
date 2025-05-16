@@ -1,50 +1,76 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
   <meta charset="UTF-8" />
   <title>Willekeurig Contact</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 2em; }
-    #contact { font-size: 1.5em; margin-top: 20px; }
-    #callBtn { display: none; margin-top: 20px; padding: 10px 20px; font-size: 1em; text-decoration: none; background: #4CAF50; color: white; border-radius: 5px; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+
+    #contact {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    #callBtn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      text-decoration: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
   </style>
   <link rel="manifest" href="/manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
   <h1>Willekeurig Contact</h1>
   <div id="contact">...</div>
   <a id="callBtn" href="#">Bel nu</a>
+  <button id="enableMotionBtn">Schuddetectie activeren</button>
+  <button id="enableShakeBtn" style="display:none;">Activeer gyroscopische schuddetectie</button>
+<button id="enableMotionBtn" style="display:none;">Activeer bewegingsdetectie</button>
+
+
 
   <script>
     function getContacts() {
-        return JSON.parse(localStorage.getItem('contacts') || '[]');
+      return JSON.parse(localStorage.getItem('contacts') || '[]');
     }
 
     function pickRandomContact() {
-        const contacts = getContacts();
-        if (contacts.length === 0) return null;
-        return contacts[Math.floor(Math.random() * contacts.length)];
+      const contacts = getContacts();
+      if (contacts.length === 0) return null;
+      return contacts[Math.floor(Math.random() * contacts.length)];
     }
 
     function showContact(contact) {
-        const contactDiv = document.getElementById("contact");
-        const callBtn = document.getElementById("callBtn");
+      const contactDiv = document.getElementById("contact");
+      const callBtn = document.getElementById("callBtn");
 
-        if (contact) {
-            contactDiv.textContent = `${contact.name} - ${contact.phone}`;
-            callBtn.href = `tel:${contact.phone}`;
-            callBtn.style.display = 'inline-block';
-        } else {
-            contactDiv.textContent = "Geen contacten gevonden.";
-            callBtn.style.display = 'none';
-        }
+      if (contact) {
+        contactDiv.textContent = `${contact.name} - ${contact.phone}`;
+        callBtn.href = `tel:${contact.phone}`;
+        callBtn.style.display = 'inline-block';
+      } else {
+        contactDiv.textContent = "Geen contacten gevonden.";
+        callBtn.style.display = 'none';
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const contact = pickRandomContact();
-        showContact(contact);
+      const contact = pickRandomContact();
+      showContact(contact);
     });
   </script>
 </body>
+
 </html>
