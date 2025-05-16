@@ -1,11 +1,6 @@
 const CACHE_NAME = "pwa-cache-v1";
 const urlsToCache = [
   "/",
-  "/index.html",
-  "/js/script.js",
-  "/css/style.css",
-  "/circle.svg",
-  "/favicon.ico",
 ];
 
 // Store response in cache
@@ -36,11 +31,6 @@ const networkFirst = async (request) => {
     headers: { "Content-Type": "text/plain" },
   });
 };
-
-// Listen for fetch events
-self.addEventListener("fetch", (event) => {
-  event.respondWith(networkFirst(event.request));
-});
 
 // Pre-cache assets during install
 self.addEventListener("install", (event) => {

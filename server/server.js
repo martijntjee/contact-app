@@ -19,6 +19,13 @@ app.get("/api/contacts", async (req, res) => {
   res.json(contacts);
 });
 
+app.post("/api/contacts", async (req, res) => {
+  const newContact = req.body;
+  const collection = client.db("contact-app").collection("contacts");
+  const result = await collection.insertOne(newContact);
+  res.status(201).json(result);
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
