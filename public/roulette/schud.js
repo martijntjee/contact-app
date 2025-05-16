@@ -1,5 +1,6 @@
 let lastShakeTime = 0;
 
+// Detectie op basis van acceleratie
 window.addEventListener('devicemotion', (event) => {
     const acceleration = event.accelerationIncludingGravity;
     const x = acceleration.x;
@@ -7,7 +8,10 @@ window.addEventListener('devicemotion', (event) => {
     const z = acceleration.z;
     console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
     if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
-        document.getElementById('debug').textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+        const debug = document.getElementById('debug');
+        if (debug) {
+            debug.textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+        }
 
         const now = Date.now();
         if (now - lastShakeTime > 1000) {
@@ -17,7 +21,8 @@ window.addEventListener('devicemotion', (event) => {
     }
 });
 
-document.getElementById('debug').textContent += 'Schuddetectie geactiveerd!\n';
+const debug = document.getElementById('debug');
+if (debug) debug.textContent += 'Schuddetectie geactiveerd!\n';
 
 function getContacts() {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
@@ -76,7 +81,6 @@ function initGyroShakeDetection() {
     const btn = document.getElementById('enableShakeBtn');
 
     if (typeof DeviceOrientationEvent?.requestPermission === 'function') {
-        // iOS: toestemming vragen
         DeviceOrientationEvent.requestPermission()
             .then(state => {
                 if (state === 'granted') {
@@ -84,7 +88,6 @@ function initGyroShakeDetection() {
                     btn.style.display = 'none';
                     console.log('Schuddetectie automatisch geactiveerd!');
                 } else {
-                    // Fallback naar knop
                     btn.style.display = 'inline-block';
                     btn.addEventListener('click', () => {
                         DeviceOrientationEvent.requestPermission()
@@ -105,7 +108,6 @@ function initGyroShakeDetection() {
                 btn.style.display = 'inline-block';
             });
     } else {
-        // Android of oude browsers
         window.addEventListener('deviceorientation', onDeviceOrientation);
         btn.style.display = 'none';
         console.log('Schuddetectie gestart zonder toestemming.');

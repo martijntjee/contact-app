@@ -93,43 +93,37 @@ function renderContacts() {
         <h3>${contact.id}</h3>
         <p><strong>📞</strong> ${contact.phone}</p>
         ${contact.socialMedia
-          .map(
-            (sm) => `<p><strong>🌐</strong> ${sm.platform}: ${sm.username}</p>`
-          )
-          .join("")}
-        ${
-          contact.birthdate
-            ? `<p><strong>🎂</strong> ${contact.birthdate}</p>`
-            : ""
-        }
-        ${
-          contact.anniversary
-            ? `<p><strong>🎉</strong> ${contact.anniversary}</p>`
-            : ""
-        }
-        ${
-          contact.pronouns.length
-            ? `<p><strong>👤</strong> ${contact.pronouns.join(", ")}</p>`
-            : ""
-        }
-        ${
-          contact.company ? `<p><strong>🏢</strong> ${contact.company}</p>` : ""
-        }
-        ${
-          contact.jobTitle
-            ? `<p><strong>💼</strong> ${contact.jobTitle}</p>`
-            : ""
-        }
-        ${
-          contact.address.street || contact.address.city
-            ? `<p><strong>🏠</strong> ${contact.address.street}, 
+        .map(
+          (sm) => `<p><strong>🌐</strong> ${sm.platform}: ${sm.username}</p>`
+        )
+        .join("")}
+        ${contact.birthdate
+        ? `<p><strong>🎂</strong> ${contact.birthdate}</p>`
+        : ""
+      }
+        ${contact.anniversary
+        ? `<p><strong>🎉</strong> ${contact.anniversary}</p>`
+        : ""
+      }
+        ${contact.pronouns.length
+        ? `<p><strong>👤</strong> ${contact.pronouns.join(", ")}</p>`
+        : ""
+      }
+        ${contact.company ? `<p><strong>🏢</strong> ${contact.company}</p>` : ""
+      }
+        ${contact.jobTitle
+        ? `<p><strong>💼</strong> ${contact.jobTitle}</p>`
+        : ""
+      }
+        ${contact.address.street || contact.address.city
+        ? `<p><strong>🏠</strong> ${contact.address.street}, 
         ${contact.address.city}, ${contact.address.postalCode}, ${contact.address.country}</p>`
-            : ""
-        }
+        : ""
+      }
         ${contact.customFields.length ? "<h4>Aangepaste velden:</h4>" : ""}
         ${contact.customFields
-          .map((f) => `<p><strong>${f.key}</strong>: ${f.value}</p>`)
-          .join("")}
+        .map((f) => `<p><strong>${f.key}</strong>: ${f.value}</p>`)
+        .join("")}
         <button class="btn btn-danger" onclick="deleteContact(${index})">Verwijderen</button>
       `;
     contactList.appendChild(card);
