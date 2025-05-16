@@ -1,52 +1,61 @@
-const CACHE_NAME = "pwa-cache-v1";
+const CACHE_NAME = "pwa-cache-v3";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/js/script.js",
+  "/roulette/schud.html",
+  "/js/schud.js",
   "/css/style.css",
+  "/offline.html",
   "/circle.svg",
   "/favicon.ico",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
 ];
 
-// Store response in cache
-const putInCache = async (request, response) => {
-  const cache = await caches.open(CACHE_NAME);
-  await cache.put(request, response);
-};
-
-// Try to fetch from network, fallback to cache
+// Network first with cache fallback
 const networkFirst = async (request) => {
-  if (navigator.onLine) {
-    try {
-      const responseFromNetwork = await fetch(request);
-      putInCache(request, responseFromNetwork.clone());
-      return responseFromNetwork;
-    } catch (e) {
-      console.warn("[Service Worker] Network error, falling back to cache");
-    }
+  try {
+    const networkResponse = await fetch(request);
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, networkResponse.clone());
+    return networkResponse;
+  } catch (error) {
+    const cachedResponse = await caches.match(request);
+    return cachedResponse || caches.match('/offline.html');
   }
-
-  const responseFromCache = await caches.match(request);
-  if (responseFromCache) {
-    return responseFromCache;
-  }
-
-  return new Response("Network error happened", {
-    status: 408,
-    headers: { "Content-Type": "text/plain" },
-  });
 };
 
-// Listen for fetch events
-self.addEventListener("fetch", (event) => {
-  event.respondWith(networkFirst(event.request));
+// Install event
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
+  );
 });
 
-// Pre-cache assets during install
-self.addEventListener("install", (event) => {
-  const preCache = async () => {
-    const cache = await caches.open(CACHE_NAME);
-    return cache.addAll(urlsToCache);
-  };
-  event.waitUntil(preCache());
+// Activate event
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Fetch event
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(networkFirst(event.request));
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(cached => cached || networkFirst(event.request))
+    );
+  }
 });
