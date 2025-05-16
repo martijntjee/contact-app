@@ -1,104 +1,148 @@
 let lastShakeTime = 0;
-const SHAKE_THRESHOLD = 15;
-const DEBOUNCE_TIME = 1000;
 
-function debugLog(message) {
-  const debug = document.getElementById('debug');
-  if (debug) {
-    debug.textContent += `${new Date().toLocaleTimeString()}: ${message}\n`;
-    debug.scrollTop = debug.scrollHeight;
-  }
+function enableMotionListener() {
+    window.addEventListener('devicemotion', (event) => {
+        const acceleration = event.accelerationIncludingGravity;
+        const x = acceleration.x;
+        const y = acceleration.y;
+        const z = acceleration.z;
+        console.log(`Acceleratie: x=${x}, y=${y}, z=${z}`);
+        if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
+            const debug = document.getElementById('debug');
+            if (debug) {
+                debug.textContent += `Acceleratie: x=${x}, y=${y}, z=${z}\n`;
+            }
+
+            const now = Date.now();
+            if (now - lastShakeTime > 1000) {
+                lastShakeTime = now;
+                const randomContact = pickRandomContact();
+                showContact(randomContact);
+            }
+        }
+    });
+
+    const debug = document.getElementById('debug');
+    if (debug) debug.textContent += 'Schuddetectie geactiveerd!\n';
 }
 
 function getContacts() {
-  try {
     return JSON.parse(localStorage.getItem('contacts') || '[]');
-  } catch (e) {
-    debugLog('Fout bij laden contacten: ' + e.message);
-    return [];
-  }
 }
 
 function pickRandomContact() {
-  const contacts = getContacts();
-  return contacts.length ? contacts[Math.floor(Math.random() * contacts.length)] : null;
+    const contacts = getContacts();
+    if (contacts.length === 0) return null;
+    return contacts[Math.floor(Math.random() * contacts.length)];
 }
 
 function showContact(contact) {
-  const contactDiv = document.getElementById("contact");
-  const callBtn = document.getElementById("callBtn");
+    const contactDiv = document.getElementById("contact");
+    const callBtn = document.getElementById("callBtn");
 
-  if (contact) {
-    contactDiv.textContent = `${contact.name}\n${contact.phone}`;
-    callBtn.href = `tel:${contact.phone}`;
-    callBtn.style.display = 'inline-block';
-    debugLog(`Contact geselecteerd: ${contact.name}`);
-  } else {
-    contactDiv.textContent = "Voeg eerst contacten toe in de app";
-    callBtn.style.display = 'none';
-  }
+    if (contact) {
+        contactDiv.textContent = `${contact.name} - ${contact.phone}`;
+        callBtn.href = `tel:${contact.phone}`;
+        callBtn.style.display = 'inline-block';
+    } else {
+        contactDiv.textContent = "Voeg eerst contacten toe.";
+        callBtn.style.display = 'none';
+    }
 }
 
 function handleShake() {
-  const now = Date.now();
-  if (now - lastShakeTime > DEBOUNCE_TIME) {
-    lastShakeTime = now;
-    if (navigator.vibrate) navigator.vibrate(200);
-    const randomContact = pickRandomContact();
-    showContact(randomContact);
-  }
-}
-
-function setupMotionDetection() {
-  window.addEventListener('devicemotion', (event) => {
-    const acc = event.accelerationIncludingGravity;
-    if (!acc) return;
-
-    debugLog(`X: ${acc.x?.toFixed(2)} Y: ${acc.y?.toFixed(2)} Z: ${acc.z?.toFixed(2)}`);
-    
-    if (Math.abs(acc.x) > SHAKE_THRESHOLD || 
-        Math.abs(acc.y) > SHAKE_THRESHOLD || 
-        Math.abs(acc.z) > SHAKE_THRESHOLD) {
-      handleShake();
+    const now = Date.now();
+    if (now - lastShakeTime > 1000) {
+        lastShakeTime = now;
+        const randomContact = pickRandomContact();
+        showContact(randomContact);
     }
-  });
 }
 
-function requestMotionPermission() {
-  if (typeof DeviceMotionEvent !== 'undefined' && 
-      typeof DeviceMotionEvent.requestPermission === 'function') {
-    DeviceMotionEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === 'granted') {
-          setupMotionDetection();
-          document.getElementById('enableMotionBtn').style.display = 'none';
-          debugLog('Bewegingsdetectie geactiveerd!');
-        } else {
-          debugLog('Toestemming geweigerd voor bewegingsdetectie');
+function initGyroShakeDetection() {
+    let lastAlpha = null, lastBeta = null, lastGamma = null;
+    const threshold = 5;
+
+    function onDeviceOrientation(event) {
+        const { alpha, beta, gamma } = event;
+        if (lastAlpha !== null) {
+            const deltaAlpha = Math.abs(alpha - lastAlpha);
+            const deltaBeta = Math.abs(beta - lastBeta);
+            const deltaGamma = Math.abs(gamma - lastGamma);
+
+            if ((deltaAlpha + deltaBeta + deltaGamma) > threshold) {
+                handleShake();
+                navigator.vibrate?.(200);
+            }
         }
-      })
-      .catch(err => {
-        debugLog('Fout bij aanvragen toestemming: ' + err.message);
-      });
-  } else {
-    setupMotionDetection();
-    document.getElementById('enableMotionBtn').style.display = 'none';
-  }
+        lastAlpha = alpha;
+        lastBeta = beta;
+        lastGamma = gamma;
+    }
+
+    const btn = document.getElementById('enableShakeBtn');
+
+    if (typeof DeviceOrientationEvent?.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+            .then(state => {
+                if (state === 'granted') {
+                    window.addEventListener('deviceorientation', onDeviceOrientation);
+                    btn.style.display = 'none';
+                    console.log('Schuddetectie automatisch geactiveerd!');
+                } else {
+                    btn.style.display = 'inline-block';
+                    btn.addEventListener('click', () => {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(newState => {
+                                if (newState === 'granted') {
+                                    window.addEventListener('deviceorientation', onDeviceOrientation);
+                                    btn.style.display = 'none';
+                                    alert('Schuddetectie geactiveerd!');
+                                } else {
+                                    alert('Toestemming geweigerd.');
+                                }
+                            });
+                    });
+                }
+            })
+            .catch(err => {
+                console.error('Fout bij vragen van toestemming:', err);
+                btn.style.display = 'inline-block';
+            });
+    } else {
+        window.addEventListener('deviceorientation', onDeviceOrientation);
+        btn.style.display = 'none';
+        console.log('Schuddetectie gestart zonder toestemming.');
+    }
+}
+
+function initMotionPermission() {
+    const motionBtn = document.getElementById('enableMotionBtn');
+    if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+        motionBtn.style.display = 'inline-block';
+        motionBtn.addEventListener('click', () => {
+            DeviceMotionEvent.requestPermission().then(response => {
+                if (response === 'granted') {
+                    enableMotionListener();
+                    motionBtn.style.display = 'none';
+                    console.log('Motion geactiveerd!');
+                } else {
+                    alert('Bewegingsdetectie geweigerd.');
+                }
+            }).catch(err => {
+                console.error('Fout bij bewegingspermissie:', err);
+            });
+        });
+    } else {
+        enableMotionListener(); // Voor Android of normale browsers
+        motionBtn.style.display = 'none';
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  debugLog('App gestart');
-  showContact(pickRandomContact());
+    initGyroShakeDetection();
+    initMotionPermission();
 
-  const motionBtn = document.getElementById('enableMotionBtn');
-  motionBtn.addEventListener('click', () => {
-    debugLog('Toestemming gevraagd...');
-    requestMotionPermission();
-  });
-
-  // Voor niet-iOS devices direct activeren
-  if (typeof DeviceMotionEvent === 'undefined' || 
-      typeof DeviceMotionEvent.requestPermission !== 'function') {
-    requestMotionPermission();
-  }
+    const initialContact = pickRandomContact();
+    showContact(initialContact);
 });

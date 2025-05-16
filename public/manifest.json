@@ -1,8 +1,8 @@
 {
   "name": "Contacten App",
-  "short_name": "Contacten",
-  "description": "Kies een willekeurig contact door te schudden",
-  "start_url": "/roulette/schud.html",
+  "short_name": "c-app",
+  "description": "Een app om contacten op te slaan en te beheren",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
@@ -11,7 +11,8 @@
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/icons/icon-512.png",
@@ -19,7 +20,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "permissions": ["accelerometer"],
-  "optional_permissions": ["gyroscope"]
+  ]
 }
