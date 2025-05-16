@@ -16,7 +16,7 @@ function enableMotionListener() {
 
 enableMotionListener();
 
-setTimeout(() => {
+const testing = () => {
     const testEvent = new DeviceMotionEvent('devicemotion', {
         acceleration: {
             x: 20,
@@ -30,4 +30,4 @@ setTimeout(() => {
         }
     });
     window.dispatchEvent(testEvent);
-}, 3000);
+};
