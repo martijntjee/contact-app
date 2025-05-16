@@ -16,7 +16,8 @@ function enableMotionListener() {
             const now = Date.now();
             if (now - lastShakeTime > 1000) {
                 lastShakeTime = now;
-                window.location.href = 'schud.html';
+                const randomContact = pickRandomContact();
+                showContact(randomContact);
             }
         }
     });
